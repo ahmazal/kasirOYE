@@ -1,9 +1,214 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kasir OYE</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Dashboard Kasir</h1>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            OYE<span>Coffee</span>
+        </div>
+
+        <div class="nav-item active" onclick="window.location.href='index.html'">
+            <img src="assets/dashboard.png" alt="Dashboard" class="icon">
+            <span>Home</span>
+        </div>
+
+        <div class="nav-item" onclick="window.location.href='menu.html'">
+            <img src="assets/menu.png" alt="Menu" class="icon">
+            <span>Menu</span>
+        </div>
+
+        <div class="nav-item" onclick="window.location.href='order.html'">
+            <img src="assets/order.png" alt="Order" class="icon">
+            <span>Order</span>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="nav-item">
+                <img src="assets/logout.png" alt="Logout" class="icon">
+                <span>Log Out</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <h1>Menu</h1>
+
+            <div class="search">
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Search menu..."
+                    oninput="filterMenu()"
+                >
+
+                <img src="assets/search.png" alt="Search" class="icon">
+            </div>
+
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <!-- MENU PANEL -->
+            <div class="menu-panel">
+
+                <div class="tabs">
+
+                    <div class="tab active"
+                        onclick="setTab(this,'all')">
+                        All
+                    </div>
+
+                    <div class="tab"
+                        onclick="setTab(this,'coffee')">
+                        Coffee
+                    </div>
+
+                    <div class="tab"
+                        onclick="setTab(this,'non-coffee')">
+                        Non-Coffee
+                    </div>
+
+                    <div class="tab"
+                        onclick="setTab(this,'food')">
+                        Food
+                    </div>
+
+                    <div class="tab"
+                        onclick="setTab(this,'snack')">
+                        Snack
+                    </div>
+
+                    <div class="tab"
+                        onclick="setTab(this,'dessert')">
+                        Dessert
+                    </div>
+
+                </div>
+
+                <div class="section-title" id="section-title">
+                    All Menu
+                </div>
+
+                <div class="menu-grid" id="menu-grid">
+                    <!-- Menu otomatis dari menu.js -->
+                </div>
+
+            </div>
+
+            <!-- CART PANEL -->
+            <aside class="cart-panel">
+
+                <div class="cart-header">
+
+                    <h2>Order Summary</h2>
+
+                    <span class="order-id" id="order-id">
+                        Order #0001
+                    </span>
+
+                    <button
+                        class="clear-cart-btn"
+                        onclick="clearCart()">
+                        Clear Cart
+                    </button>
+
+                </div>
+
+                <!-- ORDER TYPE -->
+                <div class="order-type">
+
+                    <button
+                        class="otype-btn active"
+                        onclick="setOrderType(this)">
+                        Delivery
+                    </button>
+
+                    <button
+                        class="otype-btn"
+                        onclick="setOrderType(this)">
+                        Dine In
+                    </button>
+
+                    <button
+                        class="otype-btn"
+                        onclick="setOrderType(this)">
+                        Takeaway
+                    </button>
+
+                </div>
+
+                <!-- CART ITEMS -->
+                <div class="cart-items" id="cart-items">
+
+                    <div class="cart-empty">
+                        <div class="empty-icon">🛒</div>
+                        <p>Keranjang masih kosong</p>
+                    </div>
+
+                </div>
+
+                <!-- SUMMARY -->
+                <div
+                    class="cart-summary"
+                    id="cart-summary"
+                    style="display:none"
+                >
+
+                    <div class="summary-row">
+                        <span>Items</span>
+                        <span id="s-items">0 Item</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Discount</span>
+                        <span id="s-discount">-Rp 0</span>
+                    </div>
+
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="s-total">Rp 0</span>
+                    </div>
+
+                </div>
+
+                <!-- BUTTON -->
+                <button
+                    class="place-order"
+                    id="place-order-btn"
+                    disabled
+                    onclick="placeOrder()"
+                >
+                    Buat Pesanan
+                </button>
+
+            </aside>
+
+        </div>
+
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <!-- JAVASCRIPT -->
+    <script src="js/dataMenu.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/app.js"></script>
+
 </body>
 </html>
