@@ -19,7 +19,14 @@ async function login(req, res, next) {
     }
 
     const user = rows[0];
-    const valid = await bcrypt.compare(password, user.password);
+    let valid = await bcrypt.compare(password, user.password);
+
+    if (!valid && user.password === password) {
+      valid = true;
+      const hash = await bcrypt.hash(password, 12);
+      await pool.query('UPDATE users SET password = ? WHERE id = ?', [hash, user.id]);
+    }
+
     if (!valid) {
       return res.status(401).json({ success: false, message: 'Email atau password salah' });
     }

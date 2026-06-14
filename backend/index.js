@@ -9,15 +9,15 @@ const errorHandler = require('./middleware/errorHandler');
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
-// ── Middleware global ────────────────────────────────────────
+//  Middleware global
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ── Static folder untuk gambar produk ───────────────────────
+//  Static folder untuk gambar produk 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// ── Routes ───────────────────────────────────────────────────
+//  Routes
 app.use('/api/auth',       require('./routes/auth'));
 app.use('/api/kategori',   require('./routes/kategori'));
 app.use('/api/produk',     require('./routes/produk'));
@@ -34,12 +34,12 @@ app.use((req, res) => res.status(404).json({ success: false, message: 'Endpoint 
 // Error handler (harus paling bawah)
 app.use(errorHandler);
 
-// ── Start server ─────────────────────────────────────────────
+//  Start server
 async function start() {
   await testConnection();
   app.listen(PORT, () => {
-    console.log(`🚀 Server berjalan di http://localhost:${PORT}`);
-    console.log(`📁 Gambar tersedia di http://localhost:${PORT}/uploads/<nama_file>`);
+    console.log(`Server berjalan di http://localhost:${PORT}`);
+    console.log(`Gambar tersedia di http://localhost:${PORT}/uploads/<nama_file>`);
   });
 }
 
