@@ -2,65 +2,108 @@ let currentCategory = "all";
 
 function renderMenu(category = "all") {
 
-    const menuGrid = document.getElementById("menu-grid");
+    const menuGrid =
+        document.getElementById("menu-grid");
 
     let filteredItems = menuItems;
 
     if(category !== "all"){
-        filteredItems = menuItems.filter(
-            item => item.category === category
-        );
+
+        filteredItems =
+            menuItems.filter(
+                item =>
+                item.category === category
+            );
     }
 
     menuGrid.innerHTML = "";
 
+    if(filteredItems.length === 0){
+
+        menuGrid.innerHTML =
+        `
+        <p>
+            Menu tidak ditemukan
+        </p>
+        `;
+
+        return;
+    }
+
     filteredItems.forEach(item => {
 
-        menuGrid.innerHTML += `
-            <div class="menu-card">
+        menuGrid.innerHTML +=
+        `
+        <div class="menu-card">
 
-                <img
-                    src="${item.image}"
-                    alt="${item.name}"
-                    class="menu-image"
-                >
+            <img
+                src="${item.image}"
+                alt="${item.name}"
+                class="menu-image">
 
-                <div class="menu-info">
+            <div class="menu-info">
 
-                    <h3>${item.name}</h3>
+                <h3>
+                    ${item.name}
+                </h3>
 
-                    <p class="price">
-                        Rp ${item.price.toLocaleString("id-ID")}
-                    </p>
+                <p class="price">
+                    Rp ${item.price.toLocaleString("id-ID")}
+                </p>
+
+                <div class="menu-buttons">
 
                     <button
                         class="add-btn"
                         onclick="addToCart(${item.id})">
-                        Add to Cart
+
+                        Add
+
+                    </button>
+
+                    <button
+                        class="edit-btn"
+                        onclick="editMenu(${item.id})">
+
+                        Edit
+
+                    </button>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteMenu(${item.id})">
+
+                        Delete
+
                     </button>
 
                 </div>
 
             </div>
+
+        </div>
         `;
     });
 }
 
-function setTab(element, category){
+function setTab(tab, category){
 
-    document.querySelectorAll(".tab").forEach(tab=>{
-        tab.classList.remove("active");
-    });
+    document
+        .querySelectorAll(".tab")
+        .forEach(t =>
+            t.classList.remove("active")
+        );
 
-    element.classList.add("active");
+    tab.classList.add("active");
 
     currentCategory = category;
 
-    document.getElementById("section-title")
-        .textContent =
+    document.getElementById(
+        "section-title"
+    ).textContent =
         category === "all"
         ? "All Menu"
-        : category.replace("-", " ");
+        : category;
 
     renderMenu(category);
 }
@@ -79,51 +122,74 @@ function filterMenu(){
     let filteredItems = menuItems;
 
     if(currentCategory !== "all"){
-        filteredItems = filteredItems.filter(
-            item => item.category === currentCategory
-        );
+
+        filteredItems =
+            filteredItems.filter(
+                item =>
+                item.category === currentCategory
+            );
     }
 
-    filteredItems = filteredItems.filter(
-        item => item.name
-        .toLowerCase()
-        .includes(keyword)
-    );
+    filteredItems =
+        filteredItems.filter(
+            item =>
+            item.name
+            .toLowerCase()
+            .includes(keyword)
+        );
 
     menuGrid.innerHTML = "";
 
     filteredItems.forEach(item => {
 
-        menuGrid.innerHTML += `
-            <div class="menu-card">
+        menuGrid.innerHTML +=
+        `
+        <div class="menu-card">
 
-                <img
-                    src="${item.image}"
-                    alt="${item.name}"
-                    class="menu-image"
-                >
+            <img
+                src="${item.image}"
+                class="menu-image">
 
-                <div class="menu-info">
+            <div class="menu-info">
 
-                    <h3>${item.name}</h3>
+                <h3>${item.name}</h3>
 
-                    <p class="price">
-                        Rp ${item.price.toLocaleString("id-ID")}
-                    </p>
+                <p class="price">
+                    Rp ${item.price.toLocaleString("id-ID")}
+                </p>
 
-                    <button
-                        class="add-btn"
-                        onclick="addToCart(${item.id})">
-                        Add to Cart
-                    </button>
+            <div class="menu-buttons">
 
-                </div>
+            <button
+                class="edit-btn"
+                onclick="editMenu(${item.id})">
+
+                Edit
+
+            </button>
+
+            <button
+                class="delete-btn"
+                onclick="deleteMenu(${item.id})">
+
+                Delete
+
+            </button>
+
+        </div>
 
             </div>
+
+        </div>
         `;
     });
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
-    renderMenu("all");
-});
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        renderMenu("all");
+
+    }
+);

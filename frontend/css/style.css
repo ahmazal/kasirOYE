@@ -18,6 +18,11 @@
     --r:        14px;
 }
 
+.edit-btn,
+.delete-btn{
+    display:none !important;
+}
+
 body {
     font-family: 'DM Sans', sans-serif;
     background: var(--cream);
@@ -657,3 +662,4 @@ CART PANEL
 }
 
 .toast.show { transform: translateX(-50%) translateY(0); }
+

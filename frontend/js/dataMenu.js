@@ -1,4 +1,4 @@
-const menuItems = [
+const defaultMenuItems = [
     {
         id: 1,
         name: "Americano",
@@ -42,3 +42,8 @@ const menuItems = [
         image: "assets/cheesecake.png"
     }
 ];
+
+let menuItems =
+    JSON.parse(
+        localStorage.getItem("menuItems")
+    ) || defaultMenuItems;
