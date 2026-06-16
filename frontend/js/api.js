@@ -1,14 +1,12 @@
 // ============================================
 // API - Fungsi untuk fetch data dari backend
 
-const API_BASE = 'http://localhost:3000/api';
-
 // Header dengan token untuk request yang perlu autentikasi
 function getHeaders() {
   const token = getToken();
   return {
-    'Content-Type': 'application/json',
-    'Authorization': token ? `Bearer ${token}` : ''
+    "Content-Type": "application/json",
+    Authorization: token ? `Bearer ${token}` : "",
   };
 }
 
@@ -19,12 +17,12 @@ function getHeaders() {
 async function getKategori() {
   try {
     const response = await fetch(`${API_BASE}/kategori`, {
-      headers: getHeaders()
+      headers: getHeaders(),
     });
     const data = await response.json();
     return data.success ? data.data : [];
   } catch (error) {
-    console.error('Error fetch kategori:', error);
+    console.error("Error fetch kategori:", error);
     return [];
   }
 }
@@ -36,12 +34,12 @@ async function getKategori() {
 async function getProduk() {
   try {
     const response = await fetch(`${API_BASE}/produk`, {
-      headers: getHeaders()
+      headers: getHeaders(),
     });
     const data = await response.json();
     return data.success ? data.data : [];
   } catch (error) {
-    console.error('Error fetch produk:', error);
+    console.error("Error fetch produk:", error);
     return [];
   }
 }
@@ -49,12 +47,12 @@ async function getProduk() {
 async function getProdukById(id) {
   try {
     const response = await fetch(`${API_BASE}/produk/${id}`, {
-      headers: getHeaders()
+      headers: getHeaders(),
     });
     const data = await response.json();
     return data.success ? data.data : null;
   } catch (error) {
-    console.error('Error fetch produk:', error);
+    console.error("Error fetch produk:", error);
     return null;
   }
 }
@@ -66,12 +64,12 @@ async function getProdukById(id) {
 async function getPelanggan() {
   try {
     const response = await fetch(`${API_BASE}/pelanggan`, {
-      headers: getHeaders()
+      headers: getHeaders(),
     });
     const data = await response.json();
     return data.success ? data.data : [];
   } catch (error) {
-    console.error('Error fetch pelanggan:', error);
+    console.error("Error fetch pelanggan:", error);
     return [];
   }
 }
@@ -83,29 +81,34 @@ async function getPelanggan() {
 async function getTransaksi() {
   try {
     const response = await fetch(`${API_BASE}/transaksi`, {
-      headers: getHeaders()
+      headers: getHeaders(),
     });
     const data = await response.json();
     return data.success ? data.data : [];
   } catch (error) {
-    console.error('Error fetch transaksi:', error);
+    console.error("Error fetch transaksi:", error);
     return [];
   }
 }
 
-async function createTransaksi(transaksiData) {
-  try {
-    const response = await fetch(`${API_BASE}/transaksi`, {
-      method: 'POST',
-      headers: getHeaders(),
-      body: JSON.stringify(transaksiData)
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error create transaksi:', error);
-    return { success: false, message: error.message };
-  }
+async function createTransaksi(data) {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch("http://localhost:3000/api/transaksi", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body: JSON.stringify(data),
+  });
+
+  const result = await response.json();
+
+  console.log("Status:", response.status);
+  console.log("Response:", result);
+
+  return result;
 }
 
 // ============================================
@@ -115,12 +118,12 @@ async function createTransaksi(transaksiData) {
 async function getUsers() {
   try {
     const response = await fetch(`${API_BASE}/users`, {
-      headers: getHeaders()
+      headers: getHeaders(),
     });
     const data = await response.json();
     return data.success ? data.data : [];
   } catch (error) {
-    console.error('Error fetch users:', error);
+    console.error("Error fetch users:", error);
     return [];
   }
 }
