@@ -44,35 +44,56 @@ async function getProduk() {
   }
 }
 
-async function getProdukById(id) {
+async function createProduk(formData) {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE}/produk`, {
+      method: 'POST',
+      headers: {
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+      body: formData,
+    });
+    return await response.json();
+  } catch (error) {
+    console.error('Error create produk:', error);
+    return { success: false, message: error.message };
+  }
+}
+
+async function updateProduk(id, formData) {
+  try {
+    const token = getToken();
+    const response = await fetch(`${API_BASE}/produk/${id}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+      body: formData,
+    });
+    return await response.json();
+  } catch (error) {
+    console.error('Error update produk:', error);
+    return { success: false, message: error.message };
+  }
+}
+
+async function removeProduk(id) {
   try {
     const response = await fetch(`${API_BASE}/produk/${id}`, {
+      method: 'DELETE',
       headers: getHeaders(),
     });
-    const data = await response.json();
-    return data.success ? data.data : null;
+    return await response.json();
   } catch (error) {
-    console.error("Error fetch produk:", error);
-    return null;
+    console.error('Error remove produk:', error);
+    return { success: false, message: error.message };
   }
 }
 
 // ============================================
 // PELANGGAN
 // ============================================
-
-async function getPelanggan() {
-  try {
-    const response = await fetch(`${API_BASE}/pelanggan`, {
-      headers: getHeaders(),
-    });
-    const data = await response.json();
-    return data.success ? data.data : [];
-  } catch (error) {
-    console.error("Error fetch pelanggan:", error);
-    return [];
-  }
-}
 
 // ============================================
 // TRANSAKSI
@@ -91,39 +112,7 @@ async function getTransaksi() {
   }
 }
 
-async function createTransaksi(data) {
-  const token = localStorage.getItem("token");
-
-  const response = await fetch("http://localhost:3000/api/transaksi", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-    body: JSON.stringify(data),
-  });
-
-  const result = await response.json();
-
-  console.log("Status:", response.status);
-  console.log("Response:", result);
-
-  return result;
-}
-
 // ============================================
 // USER
 // ============================================
 
-async function getUsers() {
-  try {
-    const response = await fetch(`${API_BASE}/users`, {
-      headers: getHeaders(),
-    });
-    const data = await response.json();
-    return data.success ? data.data : [];
-  } catch (error) {
-    console.error("Error fetch users:", error);
-    return [];
-  }
-}

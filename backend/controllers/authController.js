@@ -48,38 +48,4 @@ async function login(req, res, next) {
   }
 }
 
-// POST /api/auth/register  (admin only)
-async function register(req, res, next) {
-  try {
-    const { nama, email, password, role = 'kasir' } = req.body;
-    if (!nama || !email || !password) {
-      return res.status(400).json({ success: false, message: 'Nama, email, dan password wajib diisi' });
-    }
-
-    const [exists] = await pool.query('SELECT id FROM users WHERE email = ?', [email]);
-    if (exists.length > 0) {
-      return res.status(409).json({ success: false, message: 'Email sudah terdaftar' });
-    }
-
-    const hash = await bcrypt.hash(password, 12);
-    const [result] = await pool.query(
-      'INSERT INTO users (nama, email, password, role) VALUES (?, ?, ?, ?)',
-      [nama, email, hash, role]
-    );
-
-    res.status(201).json({
-      success : true,
-      message : 'User berhasil ditambahkan',
-      data    : { id: result.insertId, nama, email, role },
-    });
-  } catch (err) {
-    next(err);
-  }
-}
-
-// GET /api/auth/me
-async function me(req, res) {
-  res.json({ success: true, data: req.user });
-}
-
-module.exports = { login, register, me };
+module.exports = { login };

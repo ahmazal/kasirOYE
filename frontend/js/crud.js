@@ -1,12 +1,17 @@
-function openAddModal() {
+async function openAddModal() {
 
     document.getElementById("modal-title").innerText = "Add Menu";
 
     document.getElementById("menu-id").value = "";
     document.getElementById("menu-name").value = "";
+    document.getElementById("menu-code").value = "";
     document.getElementById("menu-price").value = "";
+    document.getElementById("menu-stock").value = "0";
+    document.getElementById("menu-unit").value = "porsi";
     document.getElementById("menu-image").value = "";
-    document.getElementById("menu-category").value = "coffee";
+    document.getElementById("menu-category").value = "";
+
+    await loadMenuCategories();
 
     document.getElementById("menu-modal").style.display = "flex";
 }
@@ -15,98 +20,137 @@ function closeModal() {
     document.getElementById("menu-modal").style.display = "none";
 }
 
-function saveMenu() {
+async function loadMenuCategories() {
+    const categories = await getKategori();
+    const select = document.getElementById("menu-category");
+    select.innerHTML = '<option value="">Pilih kategori</option>';
+
+    categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.id;
+        option.textContent = category.nama;
+        select.appendChild(option);
+    });
+}
+
+async function saveMenu() {
 
     const id = document.getElementById("menu-id").value;
+    const name = document.getElementById("menu-name").value.trim();
+    const code = document.getElementById("menu-code").value.trim();
+    const price = parseFloat(document.getElementById("menu-price").value);
+    const stock = parseInt(document.getElementById("menu-stock").value, 10);
+    const unit = document.getElementById("menu-unit").value.trim() || 'porsi';
+    const imageInput = document.getElementById("menu-image");
+    const imageFile = imageInput.files[0];
+    const categoryId = document.getElementById("menu-category").value;
 
-    const name = document.getElementById("menu-name").value;
-
-    const price = parseInt(
-        document.getElementById("menu-price").value
-    );
-
-    const image = document.getElementById("menu-image").value;
-
-    const category =
-        document.getElementById("menu-category").value;
-
-    if (!name || !price) {
-        alert("Nama dan harga wajib diisi!");
+    if (!name || !code || !categoryId || !price) {
+        alert("Nama, kode, kategori, dan harga wajib diisi!");
         return;
     }
 
-    if (id) {
-
-        const menu =
-            menuItems.find(item => item.id == id);
-
-        menu.name = name;
-        menu.price = price;
-        menu.image = image;
-        menu.category = category;
-
-    } else {
-
-        menuItems.push({
-            id: Date.now(),
-            name,
-            price,
-            image,
-            category
-        });
+    const formData = new FormData();
+    formData.append('nama', name);
+    formData.append('kode_produk', code);
+    formData.append('kategori_id', categoryId);
+    formData.append('harga', price);
+    formData.append('stok', isNaN(stock) ? 0 : stock);
+    formData.append('satuan', unit);
+    if (imageFile) {
+        formData.append('gambar', imageFile);
     }
 
-    localStorage.setItem(
-        "menuItems",
-        JSON.stringify(menuItems)
-    );
+    try {
+        let result;
+        if (id) {
+            result = await updateProduk(id, formData);
+        } else {
+            if (!imageFile) {
+                alert('Silakan pilih gambar produk.');
+                return;
+            }
+            result = await createProduk(formData);
+        }
 
-    renderMenu(currentCategory);
+        if (!result.success) {
+            alert(result.message || 'Gagal menyimpan produk.');
+            return;
+        }
 
-    closeModal();
+        closeModal();
+        await loadMenuItems();
+        renderMenu(currentCategory);
+        alert(result.message || 'Produk berhasil disimpan.');
+    } catch (error) {
+        console.error(error);
+        alert('Terjadi kesalahan saat menyimpan produk.');
+    }
 }
 
-function editMenu(id) {
-
-    const menu =
-        menuItems.find(item => item.id === id);
+async function editMenu(id) {
+    const product = menuItems.find(item => item.id === id);
+    if (!product) {
+        alert('Produk tidak ditemukan');
+        return;
+    }
 
     document.getElementById("modal-title").innerText =
         "Edit Menu";
 
     document.getElementById("menu-id").value =
-        menu.id;
+        product.id;
 
     document.getElementById("menu-name").value =
-        menu.name;
+        product.name;
+
+    document.getElementById("menu-code").value =
+        product.kode_produk || '';
 
     document.getElementById("menu-price").value =
-        menu.price;
+        product.price;
 
-    document.getElementById("menu-image").value =
-        menu.image;
+    document.getElementById("menu-stock").value =
+        product.stok || 0;
 
+    document.getElementById("menu-unit").value =
+        product.satuan || 'porsi';
+
+    document.getElementById("menu-image").value = "";
+
+    await loadMenuCategories();
     document.getElementById("menu-category").value =
-        menu.category;
+        product.kategori_id || '';
 
     document.getElementById("menu-modal").style.display =
         "flex";
 }
 
-function deleteMenu(id) {
+function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+    });
+}
 
-    const confirmDelete =
-        confirm("Yakin hapus menu?");
-
+async function deleteMenu(id) {
+    const confirmDelete = confirm("Yakin hapus menu?");
     if (!confirmDelete) return;
 
-    menuItems =
-        menuItems.filter(item => item.id !== id);
+    try {
+        const result = await removeProduk(id);
+        if (!result.success) {
+            alert(result.message || 'Gagal menghapus produk.');
+            return;
+        }
 
-    localStorage.setItem(
-        "menuItems",
-        JSON.stringify(menuItems)
-    );
-
-    renderMenu(currentCategory);
+        await loadMenuItems();
+        renderMenu(currentCategory);
+        alert(result.message || 'Produk berhasil dihapus.');
+    } catch (error) {
+        console.error(error);
+        alert('Terjadi kesalahan saat menghapus produk.');
+    }
 }

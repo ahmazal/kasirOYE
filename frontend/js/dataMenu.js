@@ -18,9 +18,15 @@ function normalizeProduct(product) {
   return {
     id: product.id,
     name: product.nama,
+    kode_produk: product.kode_produk,
+    kategori_id: product.kategori_id,
+    nama_kategori: product.nama_kategori,
     category: normalizeCategory(product.nama_kategori),
     price: Number(product.harga) || 0,
-    image: product.gambar ? `${BACKEND_URL}/${product.gambar}` : 'assets/placeholder.png'
+    stok: Number(product.stok) || 0,
+    satuan: product.satuan || 'porsi',
+    gambar: product.gambar,
+    image: product.gambar ? `${BACKEND_URL}/${product.gambar}` : 'assets/placeholder.png',
   };
 }
 

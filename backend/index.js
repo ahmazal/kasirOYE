@@ -21,11 +21,7 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use('/api/auth',       require('./routes/auth'));
 app.use('/api/kategori',   require('./routes/kategori'));
 app.use('/api/produk',     require('./routes/produk'));
-app.use('/api/pelanggan',  require('./routes/pelanggan'));
 app.use('/api/transaksi',  require('./routes/transaksi'));
-app.use('/api/users',      require('./routes/users'));
-
-// Health check
 app.get('/', (req, res) => res.json({ message: '☕ Kasir API berjalan', status: 'OK' }));
 
 // 404 handler
