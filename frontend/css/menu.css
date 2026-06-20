@@ -32,6 +32,12 @@ body{
     overflow:hidden;
 }
 
+/* Overlay used to dim background when sidebar/cart open */
+.overlay{ display:none; }
+
+/* Ensure menu-panel scrolls on mobile when sidebar is fixed off-canvas */
+.menu-panel{ -webkit-overflow-scrolling: touch; }
+
 /* ========================================
    SCROLLBAR
 ======================================== */

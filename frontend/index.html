@@ -47,7 +47,9 @@
     <div class="main">
       <!-- TOPBAR -->
       <header class="topbar">
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">☰</button>
         <h1>Menu</h1>
+        <button class="cart-toggle-btn" id="cartToggleBtn" aria-label="Toggle cart">🛒</button>
 
         <div class="search">
           <input
@@ -94,9 +96,10 @@
 
             <span class="order-id" id="order-id"> Order #0001 </span>
 
-            <button class="clear-cart-btn" onclick="clearCart()">
-              Clear Cart
-            </button>
+            <div style="display:flex; gap:8px; align-items:center">
+              <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+              <button class="close-cart-btn" id="closeCartBtn" aria-label="Close cart">✕</button>
+            </div>
           </div>
 
           <!-- ORDER TYPE -->

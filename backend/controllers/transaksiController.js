@@ -21,7 +21,12 @@ async function getAll(req, res, next) {
       LEFT JOIN pelanggan p ON t.pelanggan_id = p.id
       ORDER BY t.tanggal DESC
     `);
-    res.json({ success: true, data: rows });
+    // Normalize tanggal to ISO string so frontend parses timezone consistently
+    const normalized = rows.map(r => ({
+      ...r,
+      tanggal: r.tanggal ? new Date(r.tanggal).toISOString() : r.tanggal,
+    }));
+    res.json({ success: true, data: normalized });
   } catch (err) { next(err); }
 }
 
@@ -45,7 +50,9 @@ async function getById(req, res, next) {
       WHERE dt.transaksi_id = ?
     `, [req.params.id]);
 
-    res.json({ success: true, data: { ...trx[0], items: detail } });
+    const t = trx[0];
+    const payload = { ...t, tanggal: t.tanggal ? new Date(t.tanggal).toISOString() : t.tanggal, items: detail };
+    res.json({ success: true, data: payload });
   } catch (err) { next(err); }
 }
 

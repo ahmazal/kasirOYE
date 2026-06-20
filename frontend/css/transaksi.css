@@ -125,6 +125,24 @@
   }
 }
 
+/* Hamburger & cart toggle for transaksi page */
+.hamburger-btn { display: none; background: transparent; border: none; font-size: 22px; margin-right: 8px; cursor: pointer; }
+.cart-toggle-btn { display: none; background: transparent; border: none; font-size: 20px; margin-left: 8px; cursor: pointer; }
+
+@media (max-width: 992px) {
+  .hamburger-btn { display: inline-block; }
+  .sidebar { position: fixed; left: -280px; top: 0; height: 100vh; z-index: 1200; transition: left .25s ease; }
+  body.sidebar-open .sidebar { left: 0; }
+  .overlay { display: none; }
+  body.sidebar-open .overlay { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 1100; }
+}
+
+@media (max-width: 768px) {
+  .cart-panel { position: fixed; right: -100%; top: 0; height: 100vh; width: 80%; transition: right .25s ease; z-index: 1300; }
+  body.cart-open .cart-panel { right: 0; }
+  .cart-toggle-btn { display: inline-block; }
+}
+
 @media (max-width: 760px) {
   .transaksi-table {
     min-width: 720px;
