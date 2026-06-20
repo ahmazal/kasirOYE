@@ -328,7 +328,7 @@ function printReceipt(noTransaksi, total, bayar, metode) {
 async function createTransaksi(data) {
   const token = localStorage.getItem("token");
 
-  const response = await fetch("http://localhost:3000/api/transaksi", {
+  const response = await fetch("https://kasir-production-1526.up.railway.app/api/transaksi", {
     method: "POST",
 
     headers: {

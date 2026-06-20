@@ -1,4 +1,4 @@
-const BACKEND_URL = 'http://localhost:3000';
+const BACKEND_URL = 'https://kasir-production-1526.up.railway.app';
 const BACKEND_API = `${BACKEND_URL}/api`;
 
 const menuItems = [];

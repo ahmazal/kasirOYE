@@ -1,5 +1,5 @@
 // AUTENTIKASI - Login & Token Management
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = 'https://kasir-production-1526.up.railway.app/api';
 
 // Login function
 async function login(email, password) {
