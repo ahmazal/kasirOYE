@@ -3,25 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>OYE Coffee - Login</title>
     <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="login-container">
-        <h2> WELCOME BACK </h2>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="font-size: 48px; color: #FF7A00; margin-bottom: 5px;">☕</h1>
+            <h2>OYE<span style="color: #FF7A00;">Coffee</span></h2>
+            <p style="color: #95a5a6; margin-top: 8px;">Fresh Coffee & Happiness</p>
+        </div>
+
         <form id="login-form">
             <div class="input">
-                <label for="username"> Email </label>
-                <input type="email" id="username" name="username" placeholder="Masukkan Email" required>
+                <label for="username">Email</label>
+                <input type="email" id="username" name="username" placeholder="Masukkan Email Anda" required>
             </div>
             <div class="input">
-                <label for="password"> Password</label>
-                <input type="password" id="password" name="password" placeholder="Masukkan password" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Masukkan Password Anda" required>
             </div>
-            <button type="submit" class="login-btn"> Login </button>
+            <button type="submit" class="login-btn">Masuk</button>
         </form>
+
+        <div style="text-align: center; margin-top: 20px; color: #95a5a6; font-size: 13px;">
+            <p>Gunakan akun Anda untuk masuk ke sistem kasir</p>
+        </div>
     </div>
     <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
     <script src="js/login.js"></script>
 </body>
 </html>

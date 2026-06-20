@@ -31,8 +31,8 @@ function decreaseQty(id) {
   updateCart();
 }
 
-function removeItem(id) {
-  if (!confirm("Hapus item ini dari keranjang?")) {
+async function removeItem(id) {
+  if (!(await showConfirm("Hapus item ini dari keranjang?"))) {
     return;
   }
 
@@ -128,7 +128,7 @@ async function placeOrder() {
   console.trace("PLACE ORDER");
 
   if (cart.length === 0) {
-    alert("Keranjang kosong");
+    await showAlert("Keranjang kosong");
     return;
   }
 
@@ -146,7 +146,7 @@ async function placeOrder() {
     bayar = parseInt(document.getElementById("payment-amount").value);
 
     if (!bayar || bayar < total) {
-      alert("Nominal pembayaran kurang");
+      await showAlert("Nominal pembayaran kurang");
 
       return;
     }
@@ -177,7 +177,7 @@ async function placeOrder() {
     if (result.success) {
       printReceipt(result.data.no_transaksi, total, bayar, metode);
 
-      alert("Pembayaran berhasil!");
+      await showAlert("Pembayaran berhasil!");
 
       cart = [];
 
@@ -187,11 +187,11 @@ async function placeOrder() {
 
       document.getElementById("payment-amount").focus();
     } else {
-      alert(result.message);
+      await showAlert(result.message);
     }
   } catch (error) {
     console.error(error);
-    alert("Terjadi kesalahan saat memproses transaksi.");
+    await showAlert("Terjadi kesalahan saat memproses transaksi.");
   } finally {
     btn.disabled = false;
     btn.innerText = "Bayar & Cetak Struk";
@@ -342,12 +342,12 @@ async function createTransaksi(data) {
   return await response.json();
 }
 
-function clearCart() {
+async function clearCart() {
   if (cart.length === 0) {
     return;
   }
 
-  if (!confirm("Kosongkan seluruh keranjang?")) {
+  if (!(await showConfirm("Kosongkan seluruh keranjang?"))) {
     return;
   }
 

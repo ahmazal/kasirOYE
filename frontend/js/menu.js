@@ -54,6 +54,14 @@ function renderMenu(category = "all") {
                 <div class="menu-buttons">
 
                     <button
+                        class="add-btn"
+                        onclick="addToCart(${item.id})">
+
+                        tambah
+
+                    </button>
+
+                    <button
                         class="edit-btn"
                         onclick="editMenu(${item.id})">
 
@@ -153,6 +161,14 @@ function filterMenu(){
                 onclick="editMenu(${item.id})">
 
                 Edit
+
+            </button>
+
+            <button
+                class="add-btn"
+                onclick="addToCart(${item.id})">
+
+                Tambah
 
             </button>
 

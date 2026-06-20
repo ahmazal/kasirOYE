@@ -12,10 +12,10 @@ loginForm.addEventListener('submit', async function(event) {
   const result = await login(email, password);
 
   if (result.success) {
-    alert('Login berhasil!');
+    await showAlert('Login berhasil!');
     // Redirect ke menu.html
     window.location.href = 'index.html';
   } else {
-    alert('Login gagal: ' + result.message);
+    await showAlert('Login gagal: ' + result.message);
   }
 });

@@ -32,7 +32,7 @@ async function renderTransaksi() {
 
     countEl.textContent = `Total transaksi: ${data.length}`;
 
-    // render all rows and attach data-no attribute for search
+    // render produk sesuai search
     data.forEach((trx) => {
       body.innerHTML += `
         <tr data-no-transaksi="${trx.no_transaksi || ''}">

@@ -46,7 +46,7 @@ async function saveMenu() {
     const categoryId = document.getElementById("menu-category").value;
 
     if (!name || !code || !categoryId || !price) {
-        alert("Nama, kode, kategori, dan harga wajib diisi!");
+        await showAlert("Nama, kode, kategori, dan harga wajib diisi!");
         return;
     }
 
@@ -67,31 +67,31 @@ async function saveMenu() {
             result = await updateProduk(id, formData);
         } else {
             if (!imageFile) {
-                alert('Silakan pilih gambar produk.');
+                await showAlert('Silakan pilih gambar produk.');
                 return;
             }
             result = await createProduk(formData);
         }
 
         if (!result.success) {
-            alert(result.message || 'Gagal menyimpan produk.');
+            await showAlert(result.message || 'Gagal menyimpan produk.');
             return;
         }
 
         closeModal();
         await loadMenuItems();
         renderMenu(currentCategory);
-        alert(result.message || 'Produk berhasil disimpan.');
+        await showAlert(result.message || 'Produk berhasil disimpan.');
     } catch (error) {
         console.error(error);
-        alert('Terjadi kesalahan saat menyimpan produk.');
+        await showAlert('Terjadi kesalahan saat menyimpan produk.');
     }
 }
 
 async function editMenu(id) {
     const product = menuItems.find(item => item.id === id);
     if (!product) {
-        alert('Produk tidak ditemukan');
+        await showAlert('Produk tidak ditemukan');
         return;
     }
 
@@ -136,21 +136,21 @@ function readFileAsDataURL(file) {
 }
 
 async function deleteMenu(id) {
-    const confirmDelete = confirm("Yakin hapus menu?");
+    const confirmDelete = await showConfirm("Yakin hapus menu?");
     if (!confirmDelete) return;
 
     try {
         const result = await removeProduk(id);
         if (!result.success) {
-            alert(result.message || 'Gagal menghapus produk.');
+            await showAlert(result.message || 'Gagal menghapus produk.');
             return;
         }
 
         await loadMenuItems();
         renderMenu(currentCategory);
-        alert(result.message || 'Produk berhasil dihapus.');
+        await showAlert(result.message || 'Produk berhasil dihapus.');
     } catch (error) {
         console.error(error);
-        alert('Terjadi kesalahan saat menghapus produk.');
+        await showAlert('Terjadi kesalahan saat menghapus produk.');
     }
 }

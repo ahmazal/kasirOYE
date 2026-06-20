@@ -7,6 +7,7 @@
     <title>OYE Coffee - Menu</title>
 
     <link rel="stylesheet" href="css/menu.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -54,15 +55,11 @@
 
     <div class="sidebar-bottom">
 
-        <div class="nav-item">
-
-            <img
-                src="assets/logout.png"
-                alt="Logout"
-                class="icon">
-
+        <div class="sidebar-bottom">
+            <div class="nav-item" id="logoutBtn" style="cursor: pointer">
+            <img src="assets/logout.png" alt="Logout" class="icon" />
             <span>Log Out</span>
-
+            </div>
         </div>
 
     </div>
@@ -225,6 +222,7 @@
     <script>
       requireLogin();
     </script>
+    <script src="js/ui.js"></script>
     <script src="js/api.js"></script>
     <script src="js/dataMenu.js"></script>
     <script src="js/menu.js"></script>
