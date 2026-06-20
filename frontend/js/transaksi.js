@@ -5,9 +5,11 @@ function formatRupiah(value) {
 function formatTanggal(value) {
   if (!value) return '-';
   const date = new Date(value);
+  if (isNaN(date)) return '-';
   return date.toLocaleString('id-ID', {
     dateStyle: 'short',
     timeStyle: 'short',
+    timeZone: 'Asia/Jakarta',
   });
 }
 
