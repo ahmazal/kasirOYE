@@ -69,7 +69,7 @@ async function update(req, res, next) {
       // Hapus gambar lama dari disk
       const [old] = await pool.query('SELECT gambar FROM produk WHERE id = ?', [req.params.id]);
       if (old.length > 0 && old[0].gambar) {
-        const oldPath = path.join(__dirname, '../../', old[0].gambar);
+        const oldPath = path.join(__dirname, '..', old[0].gambar);
         if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
       }
     }
@@ -102,7 +102,7 @@ async function remove(req, res, next) {
       return res.status(404).json({ success: false, message: 'Produk tidak ditemukan' });
 
     if (rows[0].gambar) {
-      const filePath = path.join(__dirname, '../../', rows[0].gambar);
+      const filePath = path.join(__dirname, '..', rows[0].gambar);
       if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     }
 

@@ -1,29 +1,25 @@
 # Kasir App - OYE Coffee
 
-A simple POS (Point of Sale) web application for a coffee shop. This repository contains a Node.js + Express backend and a static frontend (HTML/CSS/JS).
+Aplikasi kasir sederhana untuk usaha kopi. Proyek ini terdiri dari backend Node.js + Express dan frontend statis HTML/CSS/JS.
 
-## Struktur proyek
+## Struktur Proyek
 
-- `backend/` - Express API server (MySQL)
-- `frontend/` - Static frontend files (open `index.html` / `transaksi.html` in browser)
-- `uploads/` - Static folder for uploaded images
-- `db_kasir.sql` - SQL dump (tables and sample data)
-
----
+- `backend/` - API server Express dengan koneksi MySQL.
+- `frontend/` - File statis frontend.
+- `backend/uploads/` - Folder penyimpanan gambar yang diupload melalui backend.
 
 ## Persyaratan
 
-- Node.js (v16+ recommended)
+- Node.js (versi 16 atau lebih baru)
 - MySQL server
 - npm
 
----
+## Setup Backend
 
-## Setup backend
+1. Buat file `.env` di dalam folder `backend/`.
+2. Isi konfigurasi environment sesuai dengan database dan JWT Anda, contoh:
 
-1. Salin file `.env.example` (jika ada) menjadi `.env` di folder `backend/` dan sesuaikan variabel berikut:
-
-```
+```env
 PORT=3000
 DB_HOST=localhost
 DB_PORT=3306
@@ -34,7 +30,7 @@ JWT_SECRET=your_jwt_secret
 JWT_EXPIRES_IN=8h
 ```
 
-2. Install dependency dan jalankan server:
+3. Install dependency dan jalankan server:
 
 ```bash
 cd backend
@@ -44,51 +40,58 @@ npm run start
 
 Server akan berjalan di `http://localhost:3000`.
 
----
+## Setup Database
 
-## Setup database
+1. Buat database MySQL baru.
+2. Import struktur tabel dan data awal sesuai kebutuhan aplikasi. Jika tidak ada file dump di repo, buat sendiri tabel `produk`, `kategori`, `transaksi`, `detail_transaksi`, `users`, dan tabel lain yang diperlukan.
+3. Pastikan variabel database di `.env` sesuai dengan kredensial MySQL Anda.
 
-1. Buat database MySQL baru, lalu import file `db_kasir.sql` dari folder `backend/`:
+## Penggunaan Frontend
 
-```sql
--- di MySQL client:
-SOURCE db_kasir.sql;
-```
+Frontend adalah aplikasi statis di folder `frontend/`.
 
-2. Pastikan konfigurasi `.env` sesuai dengan kredensial MySQL Anda.
+- Buka `frontend/index.html`, `frontend/transaksi.html`, atau halaman lain di browser.
+- Atau gunakan server lokal seperti Live Server / `http-server` untuk membuka frontend.
+- Pastikan login berhasil dan token tersimpan di `localStorage` agar API yang memerlukan otentikasi dapat diakses.
 
----
+## Alur Upload Gambar Produk
 
-## Penggunaan frontend
+- `backend/middleware/upload.js` mengatur `multer` untuk menyimpan file di `backend/uploads/`.
+- `backend/routes/produk.js` memakai middleware `upload.single('gambar')` pada endpoint `POST /api/produk` dan `PUT /api/produk/:id`.
+- `backend/controllers/produkController.js` menyimpan path gambar ke kolom `gambar` di database.
+- Gambar tersedia melalui route statis `http://localhost:<PORT>/uploads/<nama_file>`.
 
-Frontend adalah kumpulan file statis di folder `frontend/`. Untuk development cepat, buka file `frontend/index.html` di browser (atau gunakan static server seperti `Live Server` extension / `http-server`).
-
-Pastikan token login tersimpan di `localStorage` setelah login agar request ke API dapat berhasil.
-
----
-
-## Endpoint utama (ringkasan)
+## Endpoint Utama
 
 - `POST /api/auth/login` - Login
-- `GET /api/kategori` - Ambil daftar kategori
-- `GET /api/produk` - Ambil daftar produk
-- `GET /api/pelanggan` - Ambil data pelanggan
+- `GET /api/kategori` - Ambil semua kategori (autentikasi)
+- `GET /api/kategori/:id` - Ambil kategori berdasarkan ID (autentikasi)
+- `POST /api/kategori` - Tambah kategori (admin)
+- `PUT /api/kategori/:id` - Ubah kategori (admin)
+- `DELETE /api/kategori/:id` - Hapus kategori (admin)
+- `GET /api/produk` - Ambil semua produk (autentikasi)
+- `GET /api/produk/:id` - Ambil produk berdasarkan ID (autentikasi)
+- `POST /api/produk` - Tambah produk dengan upload gambar (admin)
+- `PUT /api/produk/:id` - Ubah produk dan gambar (admin)
+- `DELETE /api/produk/:id` - Hapus produk (admin)
 - `GET /api/transaksi` - Ambil semua transaksi (autentikasi)
-- `GET /api/transaksi/:id` - Detail transaksi
-- `POST /api/transaksi` - Buat transaksi
+- `GET /api/transaksi/:id` - Ambil detail transaksi (autentikasi)
+- `POST /api/transaksi` - Buat transaksi (autentikasi)
 - `DELETE /api/transaksi/:id` - Hapus transaksi (admin)
-- `GET /api/users` - Ambil user (autentikasi)
 
+## Catatan Penting
 
----
+- Folder `backend/uploads/` harus bisa ditulis oleh server.
+- File gambar hanya didukung format JPG/JPEG, PNG, dan WEBP.
+- Batas ukuran file upload ditetapkan 2MB.
+- Path gambar disimpan di database dengan format relatif: `uploads/<nama_file>`.
 
-## Catatan pengembangan
+## Cara Menjalankan
 
-- Middleware `verifyToken` di `backend/middleware/auth.js` memeriksa header `Authorization: Bearer <token>`.
-- Jika Anda berencana menghapus tabel `pelanggan`, periksa relasi di tabel `transaksi` dan `detail_transaksi` terlebih dahulu. Saat ini `transaksi` menyimpan `pelanggan_id` sebagai foreign key optional.
-
----
+1. Jalankan backend dengan `npm run start` dari folder `backend/`.
+2. Buka frontend di browser atau melalui static server.
+3. Login, lalu gunakan fitur manajemen produk, kategori, dan transaksi.
 
 ## Kontak
 
-Jika butuh bantuan, buka issue atau hubungi pengembang.
+Jika butuh bantuan atau perbaikan, langsung kontak developer atau buka issue pada repository.
