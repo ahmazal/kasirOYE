@@ -455,12 +455,50 @@ body{
     width:100%;
 }
 
+.hamburger-btn {
+    display:none;
+    background:transparent;
+    border:none;
+    font-size:22px;
+    margin-right:12px;
+    cursor:pointer;
+}
+
+.overlay {
+    display:none;
+}
+
+body.sidebar-open .overlay {
+    display:block;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.4);
+    z-index:1100;
+}
+
 /* ========================================
    RESPONSIVE
 ======================================== */
 @media (max-width:992px){
     .menu-grid{
         grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    }
+
+    .hamburger-btn {
+        display:inline-block;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        height: 100vh;
+        z-index: 1200;
+        transition: left .25s ease;
+    }
+
+    body.sidebar-open .sidebar {
+        left: 0;
     }
 }
 
@@ -470,14 +508,27 @@ body{
         min-width:80px;
     }
 
+    body.sidebar-open .sidebar {
+        width:220px;
+    }
+
     .logo{
         font-size:16px;
         text-align:center;
         padding:0 10px 24px;
     }
 
+    body.sidebar-open .logo{
+        text-align:left;
+        padding:0 24px 28px;
+    }
+
     .nav-item span{
         display:none;
+    }
+
+    body.sidebar-open .nav-item span{
+        display:inline;
     }
 
     .topbar{
