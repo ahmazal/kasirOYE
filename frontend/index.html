@@ -17,10 +17,7 @@
     <aside class="sidebar">
       <div class="logo">OYE<span>Coffee</span></div>
 
-      <div
-        class="nav-item active"
-        onclick="window.location.href = 'index.html'"
-      >
+      <div class="nav-item active" onclick="window.location.href = 'index.html'">
         <img src="assets/dashboard.png" alt="Dashboard" class="icon" />
         <span>Home</span>
       </div>
@@ -49,7 +46,6 @@
       <header class="topbar">
         <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">☰</button>
         <h1>Menu</h1>
-        <button class="cart-toggle-btn" id="cartToggleBtn" aria-label="Toggle cart">🛒</button>
 
         <div class="search">
           <input
@@ -58,9 +54,15 @@
             placeholder="Search menu..."
             oninput="filterMenu()"
           />
-
           <img src="assets/search.png" alt="Search" class="icon" />
         </div>
+
+        <button class="cart-toggle-btn" id="cartToggleBtn" aria-label="Toggle cart">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+          </svg>
+        </button>
       </header>
 
       <!-- CONTENT -->
@@ -69,17 +71,10 @@
         <div class="menu-panel">
           <div class="tabs">
             <div class="tab active" onclick="setTab(this, 'all')">All</div>
-
             <div class="tab" onclick="setTab(this, 'coffee')">Coffee</div>
-
-            <div class="tab" onclick="setTab(this, 'non-coffee')">
-              Non-Coffee
-            </div>
-
+            <div class="tab" onclick="setTab(this, 'non-coffee')">Non-Coffee</div>
             <div class="tab" onclick="setTab(this, 'food')">Food</div>
-
             <div class="tab" onclick="setTab(this, 'snack')">Snack</div>
-
           </div>
 
           <div class="section-title" id="section-title">All Menu</div>
@@ -93,9 +88,7 @@
         <aside class="cart-panel">
           <div class="cart-header">
             <h2>Order Summary</h2>
-
-            <span class="order-id" id="order-id"> Order #0001 </span>
-
+            <span class="order-id" id="order-id">Order #0001</span>
             <div style="display:flex; gap:8px; align-items:center">
               <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
               <button class="close-cart-btn" id="closeCartBtn" aria-label="Close cart">✕</button>
@@ -104,27 +97,16 @@
 
           <!-- ORDER TYPE -->
           <div class="order-type">
-            <button class="otype-btn active" onclick="setOrderType(this)">
-              Delivery
-            </button>
-
-            <button class="otype-btn" onclick="setOrderType(this)">
-              Dine In
-            </button>
-
-            <button class="otype-btn" onclick="setOrderType(this)">
-              Takeaway
-            </button>
+            <button class="otype-btn active" onclick="setOrderType(this)">Delivery</button>
+            <button class="otype-btn" onclick="setOrderType(this)">Dine In</button>
+            <button class="otype-btn" onclick="setOrderType(this)">Takeaway</button>
           </div>
 
           <!-- CART ITEMS -->
           <div class="cart-items" id="cart-items">
             <div class="cart-empty">
               <div class="empty-icon">🛒</div>
-              <p>
-                Keranjang masih kosong.<br />
-                Silakan tambahkan menu.
-              </p>
+              <p>Keranjang masih kosong.<br />Silakan tambahkan menu.</p>
             </div>
           </div>
 
@@ -134,12 +116,10 @@
               <span>Items</span>
               <span id="s-items">0 Item</span>
             </div>
-
             <div class="summary-row">
               <span>Discount</span>
               <span id="s-discount">-Rp 0</span>
             </div>
-
             <div class="summary-row total">
               <span>Total</span>
               <span id="s-total">Rp 0</span>
@@ -150,21 +130,13 @@
             <!-- PAYMENT -->
             <div class="payment-box">
               <label>Metode Pembayaran</label>
-
-              <select
-                id="payment-method"
-                class="payment-input"
-                onchange="togglePaymentInput()"
-              >
+              <select id="payment-method" class="payment-input" onchange="togglePaymentInput()">
                 <option value="tunai">Tunai</option>
                 <option value="qris">QRIS</option>
                 <option value="debit">Debit</option>
               </select>
 
-              <label style="margin-top: 14px; display: block">
-                Nominal Bayar
-              </label>
-
+              <label style="margin-top: 14px; display: block">Nominal Bayar</label>
               <input
                 type="number"
                 id="payment-amount"
@@ -180,12 +152,7 @@
           </div>
 
           <!-- BUTTON -->
-          <button
-            class="place-order"
-            id="place-order-btn"
-            disabled
-            onclick="placeOrder()"
-          >
+          <button class="place-order" id="place-order-btn" disabled onclick="placeOrder()">
             Bayar & Cetak Struk
           </button>
         </aside>
@@ -197,9 +164,7 @@
 
     <!-- JAVASCRIPT -->
     <script src="js/auth.js"></script>
-    <script>
-      requireLogin();
-    </script>
+    <script>requireLogin();</script>
     <script src="js/ui.js"></script>
     <script src="js/dataMenu.js"></script>
     <script src="js/api.js"></script>

@@ -7,219 +7,100 @@
     <title>OYE Coffee - Menu</title>
 
     <link rel="stylesheet" href="css/menu.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <aside class="sidebar">
+        <div class="logo">OYE<span>Coffee</span></div>
 
-    <div class="logo">
-        OYE<span>Coffee</span>
-    </div>
-
-    <div class="nav-item"
-        onclick="window.location.href='index.html'">
-
-        <img
-            src="assets/dashboard.png"
-            alt="Dashboard"
-            class="icon">
-
-        <span>Home</span>
-
-    </div>
-
-    <div class="nav-item active"
-        onclick="window.location.href='menu.html'">
-
-        <img
-            src="assets/menu.png"
-            alt="Menu"
-            class="icon">
-
-        <span>Menu</span>
-
-    </div>
-
-    <div class="nav-item"
-        onclick="window.location.href='transaksi.html'">
-
-        <img
-            src="assets/order.png"
-            alt="Order"
-            class="icon">
-
-        <span>Transaksi</span>
-
-    </div>
-
-    <div class="sidebar-bottom">
-        <div class="nav-item" id="logoutBtn" style="cursor: pointer">
-            <img src="assets/logout.png" alt="Logout" class="icon" />
-            <span>Log Out</span>
+        <div class="nav-item" onclick="window.location.href='index.html'">
+            <img src="assets/dashboard.png" alt="Dashboard" class="icon">
+            <span>Home</span>
         </div>
-    </div>
 
-</aside>
+        <div class="nav-item active" onclick="window.location.href='menu.html'">
+            <img src="assets/menu.png" alt="Menu" class="icon">
+            <span>Menu</span>
+        </div>
+
+        <div class="nav-item" onclick="window.location.href='transaksi.html'">
+            <img src="assets/order.png" alt="Order" class="icon">
+            <span>Transaksi</span>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="nav-item" id="logoutBtn" style="cursor: pointer">
+                <img src="assets/logout.png" alt="Logout" class="icon" />
+                <span>Log Out</span>
+            </div>
+        </div>
+    </aside>
 
     <div class="main">
 
         <header class="topbar">
-
             <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">☰</button>
             <h1>Menu</h1>
-            <button class="cart-toggle-btn" id="cartToggleBtn" aria-label="Toggle cart">🛒</button>
-
             <div class="search">
                 <input
                     type="text"
                     id="search-input"
-                    placeholder="Search Menu..."
+                    placeholder="Search menu..."
                     oninput="filterMenu()">
+                <img src="assets/search.png" alt="Search" class="icon" />
             </div>
-
         </header>
 
         <div class="content">
+            <div class="menu-panel full-width">
 
-    <div class="menu-panel full-width">
+                <div class="menu-actions">
+                    <button class="add-menu-btn" onclick="openAddModal()">+ Add Menu</button>
+                </div>
 
-        <div class="menu-actions">
+                <div class="tabs">
+                    <div class="tab active" onclick="setTab(this,'all')">All</div>
+                    <div class="tab" onclick="setTab(this,'coffee')">Coffee</div>
+                    <div class="tab" onclick="setTab(this,'non-coffee')">Non-Coffee</div>
+                    <div class="tab" onclick="setTab(this,'food')">Food</div>
+                    <div class="tab" onclick="setTab(this,'snack')">Snack</div>
+                </div>
 
-            <button
-                class="add-menu-btn"
-                onclick="openAddModal()">
+                <div class="section-title" id="section-title">All Menu</div>
 
-                + Add Menu
+                <div class="menu-grid" id="menu-grid"></div>
 
-            </button>
-
+            </div>
         </div>
 
-        <div class="tabs">
-
-            <div class="tab active"
-                 onclick="setTab(this,'all')">
-                All
+        <!-- MODAL CRUD -->
+        <div id="menu-modal" class="modal">
+            <div class="modal-content">
+                <h2 id="modal-title">Add Menu</h2>
+                <input type="hidden" id="menu-id">
+                <input type="text" id="menu-name" placeholder="Menu Name">
+                <input type="number" id="menu-price" placeholder="Price">
+                <label for="menu-image">Gambar Produk</label>
+                <input type="file" id="menu-image" accept="image/*">
+                <input type="text" id="menu-code" placeholder="Kode Produk">
+                <input type="number" id="menu-stock" placeholder="Stok" min="0" value="0">
+                <input type="text" id="menu-unit" placeholder="Satuan" value="porsi">
+                <select id="menu-category">
+                    <option value="">Pilih kategori</option>
+                </select>
+                <div class="modal-buttons">
+                    <button class="save-btn" onclick="saveMenu()">Save</button>
+                    <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+                </div>
             </div>
-
-            <div class="tab"
-                 onclick="setTab(this,'coffee')">
-                Coffee
-            </div>
-
-            <div class="tab"
-                 onclick="setTab(this,'non-coffee')">
-                Non Coffee
-            </div>
-
-            <div class="tab"
-                 onclick="setTab(this,'food')">
-                Food
-            </div>
-
-            <div class="tab"
-                 onclick="setTab(this,'snack')">
-                Snack
-            </div>
-            
-        </div>
-
-        <h2
-            class="section-title"
-            id="section-title">
-
-            All Menu
-
-        </h2>
-
-        <div
-            class="menu-grid"
-            id="menu-grid">
-
         </div>
 
     </div>
-
-</div>
-
-
-    <!-- MODAL CRUD -->
-
-    <div
-        id="menu-modal"
-        class="modal">
-
-        <div class="modal-content">
-
-            <h2 id="modal-title">
-                Add Menu
-            </h2>
-
-            <input
-                type="hidden"
-                id="menu-id">
-
-            <input
-                type="text"
-                id="menu-name"
-                placeholder="Menu Name">
-
-            <input
-                type="number"
-                id="menu-price"
-                placeholder="Price">
-
-            <label for="menu-image">Gambar Produk</label>
-            <input
-                type="file"
-                id="menu-image"
-                accept="image/*">
-
-            <input
-                type="text"
-                id="menu-code"
-                placeholder="Kode Produk">
-
-            <input
-                type="number"
-                id="menu-stock"
-                placeholder="Stok"
-                min="0"
-                value="0">
-
-            <input
-                type="text"
-                id="menu-unit"
-                placeholder="Satuan"
-                value="porsi">
-
-            <select id="menu-category">
-                <option value="">Pilih kategori</option>
-            </select>
-
-            <div class="modal-buttons">
-
-                <button onclick="saveMenu()">
-                    Save
-                </button>
-
-                <button onclick="closeModal()">
-                    Cancel
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- JS -->
 
     <script src="js/auth.js"></script>
-    <script>
-      requireLogin();
-    </script>
+    <script>requireLogin();</script>
     <script src="js/ui.js"></script>
     <script src="js/api.js"></script>
     <script src="js/dataMenu.js"></script>
@@ -229,5 +110,4 @@
     <script src="js/app.js"></script>
 
 </body>
-
 </html>

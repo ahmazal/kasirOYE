@@ -23,8 +23,6 @@ function normalizeProduct(product) {
     nama_kategori: product.nama_kategori,
     category: normalizeCategory(product.nama_kategori),
     price: Number(product.harga) || 0,
-    stok: Number(product.stok) || 0,
-    satuan: product.satuan || 'porsi',
     gambar: product.gambar,
     image: product.gambar ? `${BACKEND_URL}/${product.gambar}` : 'assets/placeholder.png',
   };

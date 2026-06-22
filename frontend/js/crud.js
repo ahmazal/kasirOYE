@@ -6,8 +6,6 @@ async function openAddModal() {
     document.getElementById("menu-name").value = "";
     document.getElementById("menu-code").value = "";
     document.getElementById("menu-price").value = "";
-    document.getElementById("menu-stock").value = "0";
-    document.getElementById("menu-unit").value = "porsi";
     document.getElementById("menu-image").value = "";
     document.getElementById("menu-category").value = "";
 
