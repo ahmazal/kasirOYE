@@ -32,6 +32,11 @@ body{
     overflow:hidden;
 }
 
+
+.add-btn{
+    display:none !important;
+}
+
 /* Overlay used to dim background when sidebar/cart open */
 .overlay{ display:none; }
 

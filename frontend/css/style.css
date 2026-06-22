@@ -731,7 +731,6 @@ CART PANEL
 
 .toast.show { transform: translateX(-50%) translateY(0); }
 
-<<<<<<< HEAD
 .menu-grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
@@ -842,5 +841,3 @@ CART PANEL
     justify-content:space-between !important;
     align-items:center !important;
 }
-=======
->>>>>>> origin/frontend
