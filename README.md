@@ -1,3 +1,9 @@
+# Nama kelompok
+1. Rizal Rahmadani - 202451060
+2. Nabila Marlyana - 202451041
+3. AUDREY FADILLAH 'ATHA' RINALDI - 202451040
+4. Wafda Hilal Azka Alfalah - 202451058
+
 # Kasir App - OYE Coffee
 
 Aplikasi kasir sederhana untuk usaha kopi. Proyek ini terdiri dari backend Node.js + Express dan frontend statis HTML/CSS/JS.
